@@ -2,4 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="status_pending">#FFA000</color>
+    <color name="status_approved">#1976D2</color>
+    <color name="status_in_progress">#7B1FA2</color>
+    <color name="status_completed">#388E3C</color>
+    <color name="status_rejected">#D32F2F</color>
+
+    <color name="chart_engine">#E53935</color>
+    <color name="chart_electrical">#FDD835</color>
+    <color name="chart_transmission">#1E88E5</color>
+    <color name="chart_brakes">#FB8C00</color>
+    <color name="chart_oil_change">#43A047</color>
+    <color name="chart_general">#8E24AA</color>
+    <color name="chart_body_work">#00ACC1</color>
+
+    <color name="star_filled">#FFC107</color>
+    <color name="star_empty">#E0E0E0</color>
 </resources>

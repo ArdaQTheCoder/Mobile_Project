@@ -40,6 +40,24 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+
+    // Room (SQLite)
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+
+    // Retrofit + OkHttp (API)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.okhttp.logging)
+    implementation(libs.gson)
+
+    // Lifecycle
+    implementation(libs.lifecycle.livedata)
+    implementation(libs.lifecycle.viewmodel)
+
+    // Charts
+    implementation(libs.mpandroidchart)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

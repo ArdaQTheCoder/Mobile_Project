@@ -1,24 +1,35 @@
 package com.example.mobile_project;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.mobile_project.data.preferences.PreferencesManager;
+import com.example.mobile_project.ui.auth.LoginActivity;
+import com.example.mobile_project.ui.customer.CustomerMainActivity;
+import com.example.mobile_project.ui.mechanic.MechanicMainActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        PreferencesManager prefs = new PreferencesManager(this);
+
+        Intent intent;
+        if (prefs.isLoggedIn()) {
+            if ("MECHANIC".equals(prefs.getUserRole())) {
+                intent = new Intent(this, MechanicMainActivity.class);
+            } else {
+                intent = new Intent(this, CustomerMainActivity.class);
+            }
+        } else {
+            intent = new Intent(this, LoginActivity.class);
+        }
+
+        startActivity(intent);
+        finish();
     }
 }

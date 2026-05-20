@@ -1,0 +1,56 @@
+Looking at your requirements, I identified some missing features needed for the application to function properly and feel more professional, and I have included them in the plan[cite: 1]:
+
+* Vehicle Management: A customer may have multiple vehicles, so a "Vehicle Addition" step should be added to the system[cite: 1].
+* Appointment Statuses: Appointments should have statuses such as "Pending", "Approved", and "Completed" so that both the mechanic and the customer can track the process[cite: 2].
+* API Usage Logic: To logically establish the combination of SQLite (local) and API (remote), which is a class requirement, you should use an "Offline-First" (Local-First) architecture[cite: 3].
+* Data Flow: Data is fetched from the API and written to SQLite, and the application reads from SQLite. Additionally, you can use a ready-made external API (e.g., NHTSA Vehicle API) for the vehicle make/model list[cite: 4].
+* Storing Settings: Theme, notification, or language preferences should be kept on the device using SharedPreferences (or DataStore)[cite: 5].
+
+I have prepared a step-by-step To-Do List (Development Plan) for you to manage the development process[cite: 6]:
+
+---
+
+Phase 1: Project Setup and Architectural Design [cite: 6]
+[ ] Creation of the application project (Flutter, Kotlin, or Java)[cite: 6].
+[ ] Setting up the Git repository and making the initial commit[cite: 7].
+[ ] Database Design (SQLite): Creation of tables (Users, Vehicles, Appointments, Mechanics, Messages)[cite: 7].
+[ ] API Integration Infrastructure: Adding libraries for HTTP requests (Retrofit, Dio, etc.) to the project[cite: 8].
+[ ] Local Data Storage: Setting up the SharedPreferences/DataStore infrastructure for user sessions and application settings (dark theme, etc.)[cite: 9].
+
+Phase 2: Authentication (Auth) and Routing [cite: 10]
+[ ] Designing Register / Login screens[cite: 10].
+[ ] User type selection: "Login as Customer" or "Login as Mechanic"[cite: 11].
+[ ] Redirecting the user to the Customer or Mechanic main screen based on their logged-in role (Role-based routing)[cite: 12].
+[ ] Maintaining the active session on the device (so it does not ask for login again when the app is closed and reopened)[cite: 13].
+
+Phase 3: Customer Module (Customer App) [cite: 14]
+[ ] Vehicle Management: Adding a vehicle to the system by entering vehicle make, model, year, and mileage information (an external API can be used for the Make/Model list)[cite: 14].
+[ ] Customer Dashboard[cite: 15]:
+    [ ] Fetching the diagnostic/fault history data of the selected vehicle from SQLite/API[cite: 15].
+    [ ] Visualizing fault rates with a pie chart or bar chart (e.g., Engine 40%, Transmission 20%, etc.)[cite: 16].
+    [ ] Calculating and displaying the last oil change date and remaining mileage on the screen[cite: 17].
+[ ] Past Service Records Screen: Listing which mechanic provided service, on what date, and for what reason[cite: 18].
+[ ] Appointment Booking Flow[cite: 19]:
+    [ ] Mechanic list screen that can be filtered by areas of expertise (Category: Engine, Electrical, etc.)[cite: 19].
+    [ ] Mechanic detail screen (Past customer ratings and reviews)[cite: 20].
+    [ ] Creating an appointment request by selecting Date (Date Picker) and Time (Time Picker)[cite: 21].
+[ ] Rating System: A screen for completed appointments to give the mechanic 1 to 5 stars and write a review[cite: 22].
+
+Phase 4: Mechanic Module (Mechanic App) [cite: 23]
+[ ] Mechanic Dashboard: Listing the approved appointments for that day[cite: 23].
+[ ] Appointment Detail Screen: Incoming customer's information, the vehicle's make/model, and the complaint specified by the customer[cite: 24].
+[ ] Appointment Management: Managing incoming appointment requests with "Approve" or "Reject" buttons[cite: 25].
+[ ] Status Update: Marking the appointment as "In Progress" and, when the job is done, as "Completed" (this status should be reflected to the customer as a notification or interface update)[cite: 26].
+
+Phase 5: Common Modules (Chat and Settings) [cite: 27]
+[ ] Chat Module: Enabling the customer and mechanic to message each other over an active appointment[cite: 27].
+    [ ] Sending messages via the API and caching them on SQLite[cite: 28].
+    [ ] Messaging interface (Chat bubble design)[cite: 28].
+[ ] Settings Screen[cite: 29]:
+    [ ] Profile editing (Name, phone, password)[cite: 29].
+    [ ] Theme selection (Light/Dark) and notification permissions (keeping settings on the device with SharedPreferences)[cite: 30].
+
+Phase 6: Testing and Optimization [cite: 31]
+[ ] Testing whether the application continues to work with old data (read-only) via SQLite when the API connection is lost[cite: 31].
+[ ] Synchronization testing of appointment statuses between Mechanic and Customer accounts[cite: 32].
+[ ] Adding exception handling and empty state screens (e.g., "You don't have any vehicles yet, click to add")[cite: 33].
