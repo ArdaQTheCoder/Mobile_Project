@@ -1,5 +1,7 @@
 package com.example.mobile_project.ui.customer;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -60,6 +62,8 @@ public class AddVehicleActivity extends AppCompatActivity {
             return insets;
         });
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         db = AppDatabase.getInstance(this);
         prefs = new PreferencesManager(this);
         apiService = ApiClient.getInstance().create(NhtsaApiService.class);
@@ -92,6 +96,10 @@ public class AddVehicleActivity extends AppCompatActivity {
     }
 
     private void loadMakes() {
+        if (!isNetworkAvailable()) {
+            enableManualInput();
+            return;
+        }
         progressBar.setVisibility(View.VISIBLE);
         apiService.getCarMakes().enqueue(new Callback<NhtsaMakeResponse>() {
             @Override
@@ -108,14 +116,15 @@ public class AddVehicleActivity extends AppCompatActivity {
                             android.R.layout.simple_dropdown_item_1line,
                             makeNames);
                     actvMake.setAdapter(adapter);
+                } else {
+                    enableManualInput();
                 }
             }
 
             @Override
             public void onFailure(Call<NhtsaMakeResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(AddVehicleActivity.this,
-                        R.string.api_error, Toast.LENGTH_SHORT).show();
+                enableManualInput();
             }
         });
     }
@@ -144,9 +153,23 @@ public class AddVehicleActivity extends AppCompatActivity {
             public void onFailure(Call<NhtsaModelResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(AddVehicleActivity.this,
-                        R.string.api_error, Toast.LENGTH_SHORT).show();
+                        R.string.api_error_models, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void enableManualInput() {
+        progressBar.setVisibility(View.GONE);
+        actvMake.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
+        actvModel.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
+        Toast.makeText(this, R.string.offline_manual_entry, Toast.LENGTH_LONG).show();
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        if (cm == null) return false;
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
     }
 
     private void saveVehicle() {
@@ -166,8 +189,19 @@ public class AddVehicleActivity extends AppCompatActivity {
         if (yearStr.isEmpty()) { tilYear.setError(getString(R.string.field_required)); return; }
         if (mileageStr.isEmpty()) { tilMileage.setError(getString(R.string.field_required)); return; }
 
-        int year = Integer.parseInt(yearStr);
-        int mileage = Integer.parseInt(mileageStr);
+        int year, mileage;
+        try {
+            year = Integer.parseInt(yearStr);
+        } catch (NumberFormatException e) {
+            tilYear.setError(getString(R.string.invalid_year));
+            return;
+        }
+        try {
+            mileage = Integer.parseInt(mileageStr);
+        } catch (NumberFormatException e) {
+            tilMileage.setError(getString(R.string.field_required));
+            return;
+        }
 
         if (year < 1900 || year > 2030) {
             tilYear.setError(getString(R.string.invalid_year));

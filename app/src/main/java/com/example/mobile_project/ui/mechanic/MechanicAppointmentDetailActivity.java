@@ -1,5 +1,6 @@
 package com.example.mobile_project.ui.mechanic;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobile_project.R;
 import com.example.mobile_project.data.database.AppDatabase;
+import com.example.mobile_project.ui.common.ChatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
@@ -40,8 +42,15 @@ public class MechanicAppointmentDetailActivity extends AppCompatActivity {
             return insets;
         });
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         db = AppDatabase.getInstance(this);
         appointmentId = getIntent().getIntExtra("appointmentId", -1);
+        if (appointmentId == -1) {
+            Toast.makeText(this, R.string.error_something_went_wrong, Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         MaterialTextView tvStatus = findViewById(R.id.tvStatus);
         MaterialTextView tvCustomerName = findViewById(R.id.tvCustomerName);
@@ -54,6 +63,7 @@ public class MechanicAppointmentDetailActivity extends AppCompatActivity {
         MaterialCardView cardNotes = findViewById(R.id.cardNotes);
         TextInputLayout tilNotes = findViewById(R.id.tilNotes);
         TextInputEditText etNotes = findViewById(R.id.etNotes);
+        MaterialButton btnChat = findViewById(R.id.btnChat);
         MaterialButton btnStartWork = findViewById(R.id.btnStartWork);
         MaterialButton btnComplete = findViewById(R.id.btnComplete);
 
@@ -61,8 +71,8 @@ public class MechanicAppointmentDetailActivity extends AppCompatActivity {
             if (item == null) return;
 
             // Customer info
-            tvCustomerName.setText(item.customerName);
-            tvCustomerPhone.setText(item.customerPhone);
+            tvCustomerName.setText(item.customerName != null ? item.customerName : "");
+            tvCustomerPhone.setText(item.customerPhone != null ? item.customerPhone : "");
 
             // Vehicle info
             tvVehicle.setText(item.vehicleYear + " " + item.vehicleMake + " " + item.vehicleModel);
@@ -89,6 +99,7 @@ public class MechanicAppointmentDetailActivity extends AppCompatActivity {
             tvStatus.setBackgroundTintList(ColorStateList.valueOf(color & 0x33FFFFFF));
 
             // Show/hide action buttons based on status
+            btnChat.setVisibility(View.GONE);
             btnStartWork.setVisibility(View.GONE);
             btnComplete.setVisibility(View.GONE);
             tilNotes.setVisibility(View.GONE);
@@ -96,9 +107,11 @@ public class MechanicAppointmentDetailActivity extends AppCompatActivity {
 
             switch (status) {
                 case "APPROVED":
+                    btnChat.setVisibility(View.VISIBLE);
                     btnStartWork.setVisibility(View.VISIBLE);
                     break;
                 case "IN_PROGRESS":
+                    btnChat.setVisibility(View.VISIBLE);
                     tilNotes.setVisibility(View.VISIBLE);
                     btnComplete.setVisibility(View.VISIBLE);
                     break;
@@ -109,6 +122,15 @@ public class MechanicAppointmentDetailActivity extends AppCompatActivity {
                     }
                     break;
             }
+
+            btnChat.setOnClickListener(v -> {
+                Intent chatIntent = new Intent(this, ChatActivity.class);
+                chatIntent.putExtra("appointmentId", appointmentId);
+                chatIntent.putExtra("otherName", item.customerName);
+                chatIntent.putExtra("category", item.appointment.getCategory());
+                chatIntent.putExtra("vehicleInfo", item.vehicleMake + " " + item.vehicleModel);
+                startActivity(chatIntent);
+            });
         });
 
         btnStartWork.setOnClickListener(v -> {

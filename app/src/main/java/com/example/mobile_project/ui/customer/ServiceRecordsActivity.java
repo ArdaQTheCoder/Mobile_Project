@@ -29,8 +29,14 @@ public class ServiceRecordsActivity extends AppCompatActivity {
             return insets;
         });
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         int vehicleId = getIntent().getIntExtra("vehicleId", -1);
         String vehicleInfo = getIntent().getStringExtra("vehicleInfo");
+        if (vehicleId == -1) {
+            finish();
+            return;
+        }
 
         MaterialTextView tvVehicleInfo = findViewById(R.id.tvVehicleInfo);
         MaterialTextView tvEmpty = findViewById(R.id.tvEmpty);

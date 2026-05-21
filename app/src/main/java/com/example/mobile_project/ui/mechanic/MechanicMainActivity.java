@@ -17,6 +17,8 @@ import com.example.mobile_project.data.database.AppDatabase;
 import com.example.mobile_project.data.model.AppointmentWithDetails;
 import com.example.mobile_project.data.preferences.PreferencesManager;
 import com.example.mobile_project.ui.auth.LoginActivity;
+import com.example.mobile_project.ui.common.ChatListActivity;
+import com.example.mobile_project.ui.common.SettingsActivity;
 import com.example.mobile_project.ui.mechanic.adapter.MechanicTodayAdapter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -62,6 +64,8 @@ public class MechanicMainActivity extends AppCompatActivity implements MechanicT
         MaterialButton btnLogout = findViewById(R.id.btnLogout);
         MaterialButton btnViewPending = findViewById(R.id.btnViewPending);
         MaterialButton btnViewAll = findViewById(R.id.btnViewAll);
+        MaterialButton btnMessages = findViewById(R.id.btnMessages);
+        MaterialButton btnSettings = findViewById(R.id.btnSettings);
         MaterialCardView cardPendingCount = findViewById(R.id.cardPendingCount);
 
         RecyclerView rvToday = findViewById(R.id.rvTodayAppointments);
@@ -112,6 +116,10 @@ public class MechanicMainActivity extends AppCompatActivity implements MechanicT
                 startActivity(new Intent(this, MechanicPendingActivity.class)));
         btnViewAll.setOnClickListener(v ->
                 startActivity(new Intent(this, MechanicAllAppointmentsActivity.class)));
+        btnMessages.setOnClickListener(v ->
+                startActivity(new Intent(this, ChatListActivity.class)));
+        btnSettings.setOnClickListener(v ->
+                startActivity(new Intent(this, SettingsActivity.class)));
     }
 
     @Override

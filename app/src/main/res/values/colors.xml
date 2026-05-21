@@ -19,4 +19,9 @@
 
     <color name="star_filled">#FFC107</color>
     <color name="star_empty">#E0E0E0</color>
+
+    <color name="chat_bubble_sent">#E3F2FD</color>
+    <color name="chat_bubble_received">#F5F5F5</color>
+    <color name="chat_time">#9E9E9E</color>
+    <color name="unread_badge">#D32F2F</color>
 </resources>

@@ -32,6 +32,8 @@ public class MechanicAllAppointmentsActivity extends AppCompatActivity {
             return insets;
         });
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         MaterialTextView tvEmpty = findViewById(R.id.tvEmpty);
         RecyclerView rvAppointments = findViewById(R.id.rvAppointments);
 

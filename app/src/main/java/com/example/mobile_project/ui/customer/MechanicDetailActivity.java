@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,8 +42,15 @@ public class MechanicDetailActivity extends AppCompatActivity {
             return insets;
         });
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         db = AppDatabase.getInstance(this);
         mechanicUserId = getIntent().getIntExtra("mechanicUserId", -1);
+        if (mechanicUserId == -1) {
+            Toast.makeText(this, R.string.error_something_went_wrong, Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         MaterialTextView tvName = findViewById(R.id.tvName);
         MaterialTextView tvRating = findViewById(R.id.tvRating);

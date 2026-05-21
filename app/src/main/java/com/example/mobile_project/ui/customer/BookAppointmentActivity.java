@@ -59,9 +59,16 @@ public class BookAppointmentActivity extends AppCompatActivity {
             return insets;
         });
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         db = AppDatabase.getInstance(this);
         prefs = new PreferencesManager(this);
         mechanicUserId = getIntent().getIntExtra("mechanicUserId", -1);
+        if (mechanicUserId == -1) {
+            Toast.makeText(this, R.string.error_something_went_wrong, Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         MaterialTextView tvMechanicName = findViewById(R.id.tvMechanicName);
         tilVehicle = findViewById(R.id.tilVehicle);
@@ -98,6 +105,11 @@ public class BookAppointmentActivity extends AppCompatActivity {
     private void loadVehicles() {
         db.vehicleDao().getByUserId(prefs.getUserId()).observe(this, vehicles -> {
             vehicleList = vehicles != null ? vehicles : new ArrayList<>();
+            if (vehicleList.isEmpty()) {
+                Toast.makeText(this, R.string.no_vehicles_yet, Toast.LENGTH_LONG).show();
+                btnBook.setEnabled(false);
+                return;
+            }
             List<String> names = new ArrayList<>();
             for (Vehicle v : vehicleList) {
                 names.add(v.getYear() + " " + v.getMake() + " " + v.getModel());

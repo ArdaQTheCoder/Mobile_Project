@@ -108,7 +108,7 @@ public interface AppointmentDao {
             "WHERE a.id = :id")
     LiveData<AppointmentWithDetails> getByIdWithDetails(int id);
 
-    @Query("SELECT * FROM appointments WHERE vehicleId = :vehicleId AND category = 'OIL_CHANGE' AND status = 'COMPLETED' ORDER BY updatedAt DESC LIMIT 1")
+    @Query("SELECT * FROM appointments WHERE vehicleId = :vehicleId AND category = 'Oil Change' AND status = 'COMPLETED' ORDER BY updatedAt DESC LIMIT 1")
     Appointment getLastOilChange(int vehicleId);
 
     @Query("SELECT COUNT(*) FROM appointments WHERE vehicleId = :vehicleId AND status = 'COMPLETED'")
@@ -119,6 +119,26 @@ public interface AppointmentDao {
 
     @Query("SELECT COUNT(*) FROM appointments WHERE mechanicId = :mechanicId AND date = :date AND status IN ('APPROVED', 'IN_PROGRESS')")
     LiveData<Integer> getTodayCountForMechanic(int mechanicId, String date);
+
+    // --- Chat: active appointments ---
+
+    @Query("SELECT a.*, m.fullName AS mechanicName, c.fullName AS customerName, " +
+            "c.phone AS customerPhone, v.make AS vehicleMake, v.model AS vehicleModel, v.year AS vehicleYear " +
+            "FROM appointments a " +
+            "INNER JOIN users m ON a.mechanicId = m.id " +
+            "INNER JOIN users c ON a.customerId = c.id " +
+            "INNER JOIN vehicles v ON a.vehicleId = v.id " +
+            "WHERE a.customerId = :customerId AND a.status IN ('APPROVED', 'IN_PROGRESS') ORDER BY a.updatedAt DESC")
+    LiveData<List<AppointmentWithDetails>> getActiveForCustomerWithDetails(int customerId);
+
+    @Query("SELECT a.*, m.fullName AS mechanicName, c.fullName AS customerName, " +
+            "c.phone AS customerPhone, v.make AS vehicleMake, v.model AS vehicleModel, v.year AS vehicleYear " +
+            "FROM appointments a " +
+            "INNER JOIN users m ON a.mechanicId = m.id " +
+            "INNER JOIN users c ON a.customerId = c.id " +
+            "INNER JOIN vehicles v ON a.vehicleId = v.id " +
+            "WHERE a.mechanicId = :mechanicId AND a.status IN ('APPROVED', 'IN_PROGRESS') ORDER BY a.updatedAt DESC")
+    LiveData<List<AppointmentWithDetails>> getActiveForMechanicWithDetails(int mechanicId);
 
     class CategoryCount {
         public String category;

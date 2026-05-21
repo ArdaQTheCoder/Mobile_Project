@@ -38,12 +38,19 @@ public class RateAppointmentActivity extends AppCompatActivity {
             return insets;
         });
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         db = AppDatabase.getInstance(this);
         PreferencesManager prefs = new PreferencesManager(this);
 
         int appointmentId = getIntent().getIntExtra("appointmentId", -1);
         int mechanicId = getIntent().getIntExtra("mechanicId", -1);
         String mechanicName = getIntent().getStringExtra("mechanicName");
+        if (appointmentId == -1 || mechanicId == -1) {
+            Toast.makeText(this, R.string.error_something_went_wrong, Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         MaterialTextView tvMechanicName = findViewById(R.id.tvMechanicName);
         RatingBar ratingBar = findViewById(R.id.ratingBar);

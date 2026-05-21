@@ -35,6 +35,8 @@ public class VehicleListActivity extends AppCompatActivity {
             return insets;
         });
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         tvEmpty = findViewById(R.id.tvEmpty);
         RecyclerView rvVehicles = findViewById(R.id.rvVehicles);
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);

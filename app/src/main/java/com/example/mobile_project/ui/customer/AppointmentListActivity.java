@@ -16,10 +16,12 @@ import com.example.mobile_project.R;
 import com.example.mobile_project.data.database.AppDatabase;
 import com.example.mobile_project.data.model.AppointmentWithDetails;
 import com.example.mobile_project.data.preferences.PreferencesManager;
+import com.example.mobile_project.ui.common.ChatActivity;
 import com.example.mobile_project.ui.customer.adapter.AppointmentAdapter;
 import com.google.android.material.textview.MaterialTextView;
 
-public class AppointmentListActivity extends AppCompatActivity implements AppointmentAdapter.OnRateClickListener {
+public class AppointmentListActivity extends AppCompatActivity
+        implements AppointmentAdapter.OnRateClickListener, AppointmentAdapter.OnChatClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +34,12 @@ public class AppointmentListActivity extends AppCompatActivity implements Appoin
             return insets;
         });
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         MaterialTextView tvEmpty = findViewById(R.id.tvEmpty);
         RecyclerView rvAppointments = findViewById(R.id.rvAppointments);
 
-        AppointmentAdapter adapter = new AppointmentAdapter(this);
+        AppointmentAdapter adapter = new AppointmentAdapter(this, this);
         rvAppointments.setLayoutManager(new LinearLayoutManager(this));
         rvAppointments.setAdapter(adapter);
 
@@ -60,6 +64,16 @@ public class AppointmentListActivity extends AppCompatActivity implements Appoin
         intent.putExtra("appointmentId", appointment.appointment.getId());
         intent.putExtra("mechanicName", appointment.mechanicName);
         intent.putExtra("mechanicId", appointment.appointment.getMechanicId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onChatClick(AppointmentWithDetails appointment) {
+        Intent intent = new Intent(this, ChatActivity.class);
+        intent.putExtra("appointmentId", appointment.appointment.getId());
+        intent.putExtra("otherName", appointment.mechanicName);
+        intent.putExtra("category", appointment.appointment.getCategory());
+        intent.putExtra("vehicleInfo", appointment.vehicleMake + " " + appointment.vehicleModel);
         startActivity(intent);
     }
 }

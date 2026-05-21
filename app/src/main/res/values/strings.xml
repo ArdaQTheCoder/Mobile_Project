@@ -55,6 +55,9 @@
     <string name="no_vehicles_yet">You don\'t have any vehicles yet.\nTap + to add your first vehicle!</string>
     <string name="vehicle_added">Vehicle added successfully</string>
     <string name="api_error">Could not load data from server</string>
+    <string name="api_error_models">Could not load models. You can type the model manually.</string>
+    <string name="offline_manual_entry">No internet connection. You can type make and model manually.</string>
+    <string name="error_something_went_wrong">Something went wrong. Please try again.</string>
 
     <!-- Appointments -->
     <string name="my_appointments">My Appointments</string>
@@ -115,6 +118,28 @@
     <string name="appointment_rejected">Appointment rejected</string>
     <string name="status_updated">Status updated</string>
     <string name="appointment_completed">Appointment marked as completed</string>
+
+    <!-- Chat -->
+    <string name="messages">Messages</string>
+    <string name="no_active_chats">No active conversations.\nChat is available for approved or in-progress appointments.</string>
+    <string name="type_message">Type a message…</string>
+    <string name="send">Send</string>
+    <string name="chat_with">Chat with %1$s</string>
+    <string name="no_messages_yet">No messages yet.\nSay hello!</string>
+    <string name="chat">Chat</string>
+
+    <!-- Settings -->
+    <string name="settings">Settings</string>
+    <string name="profile">Profile</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="new_password">New Password (leave blank to keep)</string>
+    <string name="appearance">Appearance</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="notifications">Notifications</string>
+    <string name="enable_notifications">Enable Notifications</string>
+    <string name="profile_updated">Profile updated successfully</string>
+    <string name="current_password">Current Password</string>
+    <string name="wrong_password">Current password is incorrect</string>
 
     <!-- Specializations -->
     <string-array name="specializations">

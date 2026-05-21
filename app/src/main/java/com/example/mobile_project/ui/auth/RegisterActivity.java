@@ -44,6 +44,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         prefs = new PreferencesManager(this);
         db = AppDatabase.getInstance(this);
 

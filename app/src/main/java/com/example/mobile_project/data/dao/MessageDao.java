@@ -22,4 +22,10 @@ public interface MessageDao {
 
     @Query("SELECT COUNT(*) FROM messages WHERE appointmentId = :appointmentId AND senderId != :currentUserId AND isRead = 0")
     LiveData<Integer> getUnreadCount(int appointmentId, int currentUserId);
+
+    @Query("SELECT COUNT(*) FROM messages WHERE appointmentId = :appointmentId AND senderId != :currentUserId AND isRead = 0")
+    int getUnreadCountSync(int appointmentId, int currentUserId);
+
+    @Query("SELECT * FROM messages WHERE appointmentId = :appointmentId ORDER BY timestamp DESC LIMIT 1")
+    Message getLastMessageSync(int appointmentId);
 }

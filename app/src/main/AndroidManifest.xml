@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".AutoServiceApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -43,6 +45,11 @@
         <activity android:name=".ui.mechanic.MechanicPendingActivity" />
         <activity android:name=".ui.mechanic.MechanicAppointmentDetailActivity" />
         <activity android:name=".ui.mechanic.MechanicAllAppointmentsActivity" />
+
+        <!-- Common -->
+        <activity android:name=".ui.common.ChatListActivity" />
+        <activity android:name=".ui.common.ChatActivity" />
+        <activity android:name=".ui.common.SettingsActivity" />
 
     </application>
 

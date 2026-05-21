@@ -23,11 +23,22 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         void onRateClick(AppointmentWithDetails appointment);
     }
 
+    public interface OnChatClickListener {
+        void onChatClick(AppointmentWithDetails appointment);
+    }
+
     private List<AppointmentWithDetails> appointments = new ArrayList<>();
     private final OnRateClickListener rateListener;
+    private final OnChatClickListener chatListener;
 
     public AppointmentAdapter(OnRateClickListener rateListener) {
         this.rateListener = rateListener;
+        this.chatListener = null;
+    }
+
+    public AppointmentAdapter(OnRateClickListener rateListener, OnChatClickListener chatListener) {
+        this.rateListener = rateListener;
+        this.chatListener = chatListener;
     }
 
     public void setAppointments(List<AppointmentWithDetails> appointments) {
@@ -74,6 +85,14 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         } else {
             holder.btnRate.setVisibility(View.GONE);
         }
+
+        boolean isActive = "APPROVED".equals(status) || "IN_PROGRESS".equals(status);
+        if (isActive && chatListener != null) {
+            holder.btnChat.setVisibility(View.VISIBLE);
+            holder.btnChat.setOnClickListener(v -> chatListener.onChatClick(item));
+        } else {
+            holder.btnChat.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -83,7 +102,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     static class AppointmentViewHolder extends RecyclerView.ViewHolder {
         MaterialTextView tvDateTime, tvMechanic, tvVehicle, tvCategory, tvDescription, tvStatus;
-        MaterialButton btnRate;
+        MaterialButton btnRate, btnChat;
 
         AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,6 +113,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             btnRate = itemView.findViewById(R.id.btnRate);
+            btnChat = itemView.findViewById(R.id.btnChat);
         }
     }
 }

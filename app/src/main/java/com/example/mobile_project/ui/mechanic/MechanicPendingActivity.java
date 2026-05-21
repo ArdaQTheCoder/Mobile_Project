@@ -38,6 +38,8 @@ public class MechanicPendingActivity extends AppCompatActivity implements Pendin
             return insets;
         });
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         db = AppDatabase.getInstance(this);
         PreferencesManager prefs = new PreferencesManager(this);
 

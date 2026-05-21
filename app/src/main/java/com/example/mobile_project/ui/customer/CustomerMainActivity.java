@@ -21,6 +21,8 @@ import com.example.mobile_project.data.entity.Appointment;
 import com.example.mobile_project.data.entity.Vehicle;
 import com.example.mobile_project.data.preferences.PreferencesManager;
 import com.example.mobile_project.ui.auth.LoginActivity;
+import com.example.mobile_project.ui.common.ChatListActivity;
+import com.example.mobile_project.ui.common.SettingsActivity;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -80,6 +82,8 @@ public class CustomerMainActivity extends AppCompatActivity {
         MaterialCardView cardBookAppointment = findViewById(R.id.cardBookAppointment);
         MaterialCardView cardAppointments = findViewById(R.id.cardAppointments);
         MaterialCardView cardServiceHistory = findViewById(R.id.cardServiceHistory);
+        MaterialCardView cardMessages = findViewById(R.id.cardMessages);
+        MaterialCardView cardSettings = findViewById(R.id.cardSettings);
 
         btnLogout.setOnClickListener(v -> logout());
         btnAddFirstVehicle.setOnClickListener(v ->
@@ -92,6 +96,10 @@ public class CustomerMainActivity extends AppCompatActivity {
         cardAppointments.setOnClickListener(v ->
                 startActivity(new Intent(this, AppointmentListActivity.class)));
         cardServiceHistory.setOnClickListener(v -> openServiceHistory());
+        cardMessages.setOnClickListener(v ->
+                startActivity(new Intent(this, ChatListActivity.class)));
+        cardSettings.setOnClickListener(v ->
+                startActivity(new Intent(this, SettingsActivity.class)));
 
         setupPieChart();
         loadUserGreeting();

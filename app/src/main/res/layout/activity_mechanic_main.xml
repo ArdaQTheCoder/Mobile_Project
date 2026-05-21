@@ -180,7 +180,27 @@
             android:layout_height="48dp"
             android:text="@string/view_all_appointments"
             style="@style/Widget.Material3.Button.TonalButton"
-            app:cornerRadius="12dp" />
+            app:cornerRadius="12dp"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMessages"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/messages"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            app:cornerRadius="12dp"
+            app:icon="@android:drawable/sym_action_email"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSettings"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/settings"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            app:cornerRadius="12dp"
+            app:icon="@android:drawable/ic_menu_preferences" />
 
     </LinearLayout>
 </ScrollView>

@@ -40,6 +40,8 @@ public class MechanicListActivity extends AppCompatActivity implements MechanicA
             return insets;
         });
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         db = AppDatabase.getInstance(this);
         tvEmpty = findViewById(R.id.tvEmpty);
 
